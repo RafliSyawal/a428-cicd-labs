@@ -1,5 +1,4 @@
 node {
-    // Ambil kode dari Git
     stage('Checkout') {
         checkout scm
     }
@@ -12,11 +11,13 @@ node {
         }
 
         stage('Test') {
-            // Sesuaikan dengan perintah test di package.json
-            // biasanya cukup:
+            sh './jenkins/scripts/test.sh'
             sh 'npm test -- --watch=false'
-            // atau kalau butuh:
-            // sh 'CI=true npm test'
+        }
+        stage('Deploy') {
+            sh './jenkins/scripts/deliver.sh'
+            input_message: "Sudah selesai menggunakan react app? (Klik "proceed" untuk mengakhiri)"
+            sh './jenkins/scripts/kill.sh'
         }
     }
 }
