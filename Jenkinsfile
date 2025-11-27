@@ -19,8 +19,13 @@ node {
             sh 'npm test -- --watch=false'
         }
         stage('Deploy') {
+            // build & jalankan React
             sh './jenkins/scripts/deliver.sh'
-            input_message: 'Sudah selesai menggunakan react app? (Klik "proceed" untuk mengakhiri)'
+
+            // PAUSE sampai kamu klik "Proceed" di Jenkins
+            input message: 'Sudah selesai menggunakan react app? (Klik "Proceed" untuk mengakhiri pipeline)'
+
+            // matikan app setelah kamu klik Proceed
             sh './jenkins/scripts/kill.sh'
         }
     }
