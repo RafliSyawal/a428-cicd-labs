@@ -11,6 +11,7 @@ node {
         }
 
         stage('Test') {
+            sh './jenkins/scripts/test.sh'
             sh 'npm test -- --watch=false'
         }
         stage('Deploy') {
