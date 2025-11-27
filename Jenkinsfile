@@ -6,6 +6,10 @@ node {
     // Semua build & test jalan di dalam container Node
     docker.image('node:16-buster-slim').inside('-p 3000:3000') {
 
+        stage ('fix permissions') {
+            sh 'chmod +x ./jenkins/scripts/*.sh'
+        }
+
         stage('Build') {
             sh 'npm install'
         }
